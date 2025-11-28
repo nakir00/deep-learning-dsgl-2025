@@ -1,58 +1,36 @@
-import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
+import { Outlet, createRootRouteWithContext } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 
-import Header from '../components/Header'
 
-import appCss from '../styles.css?url'
+import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 
-export const Route = createRootRoute({
-  head: () => ({
-    meta: [
-      {
-        charSet: 'utf-8',
-      },
-      {
-        name: 'viewport',
-        content: 'width=device-width, initial-scale=1',
-      },
-      {
-        title: 'TanStack Start Starter',
-      },
-    ],
-    links: [
-      {
-        rel: 'stylesheet',
-        href: appCss,
-      },
-    ],
-  }),
+import type { QueryClient } from '@tanstack/react-query'
+import type { UseAuthType } from '@/hooks/useAuth'
+import { Toaster } from '@/components/ui/sonner'
 
-  shellComponent: RootDocument,
-})
-
-function RootDocument({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="en">
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        <Header />
-        {children}
-        <TanStackDevtools
-          config={{
-            position: 'bottom-right',
-          }}
-          plugins={[
-            {
-              name: 'Tanstack Router',
-              render: <TanStackRouterDevtoolsPanel />,
-            },
-          ]}
-        />
-        <Scripts />
-      </body>
-    </html>
-  )
+interface MyRouterContext {
+  queryClient: QueryClient
+  auth: UseAuthType
 }
+
+export const Route = createRootRouteWithContext<MyRouterContext>()({
+  component: () => (
+    <>
+      <Outlet />
+      <Toaster />
+      <TanStackDevtools
+        config={{
+          position: 'bottom-right',
+        }}
+        plugins={[
+          {
+            name: 'Tanstack Router',
+            render: <TanStackRouterDevtoolsPanel />,
+          },
+          TanStackQueryDevtools,
+        ]}
+      />
+    </>
+  ),
+})

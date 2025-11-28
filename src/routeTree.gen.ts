@@ -8,212 +8,257 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as DemoStartServerFuncsRouteImport } from './routes/demo/start.server-funcs'
-import { Route as DemoStartApiRequestRouteImport } from './routes/demo/start.api-request'
-import { Route as DemoApiNamesRouteImport } from './routes/demo/api.names'
-import { Route as DemoStartSsrIndexRouteImport } from './routes/demo/start.ssr.index'
-import { Route as DemoStartSsrSpaModeRouteImport } from './routes/demo/start.ssr.spa-mode'
-import { Route as DemoStartSsrFullSsrRouteImport } from './routes/demo/start.ssr.full-ssr'
-import { Route as DemoStartSsrDataOnlyRouteImport } from './routes/demo/start.ssr.data-only'
+import { createFileRoute } from '@tanstack/react-router'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as DashboardDashBoardLayoutRouteImport } from './routes/dashboard/_dashBoardLayout'
+import { Route as AuthAuthLayoutRouteImport } from './routes/auth/_authLayout'
+import { Route as visiteurGuestLayoutRouteImport } from './routes/(visiteur)/_guestLayout'
+import { Route as DashboardDashBoardLayoutIndexRouteImport } from './routes/dashboard/_dashBoardLayout/index'
+import { Route as visiteurGuestLayoutIndexRouteImport } from './routes/(visiteur)/_guestLayout/index'
+import { Route as AuthAuthLayoutRegisterRouteImport } from './routes/auth/_authLayout/register'
+import { Route as AuthAuthLayoutLoginRouteImport } from './routes/auth/_authLayout/login'
+
+const DashboardRouteImport = createFileRoute('/dashboard')()
+const AuthRouteImport = createFileRoute('/auth')()
+
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DemoStartServerFuncsRoute = DemoStartServerFuncsRouteImport.update({
-  id: '/demo/start/server-funcs',
-  path: '/demo/start/server-funcs',
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DemoStartApiRequestRoute = DemoStartApiRequestRouteImport.update({
-  id: '/demo/start/api-request',
-  path: '/demo/start/api-request',
+const DashboardDashBoardLayoutRoute =
+  DashboardDashBoardLayoutRouteImport.update({
+    id: '/_dashBoardLayout',
+    getParentRoute: () => DashboardRoute,
+  } as any)
+const AuthAuthLayoutRoute = AuthAuthLayoutRouteImport.update({
+  id: '/_authLayout',
+  getParentRoute: () => AuthRoute,
+} as any)
+const visiteurGuestLayoutRoute = visiteurGuestLayoutRouteImport.update({
+  id: '/(visiteur)/_guestLayout',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DemoApiNamesRoute = DemoApiNamesRouteImport.update({
-  id: '/demo/api/names',
-  path: '/demo/api/names',
-  getParentRoute: () => rootRouteImport,
+const DashboardDashBoardLayoutIndexRoute =
+  DashboardDashBoardLayoutIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => DashboardDashBoardLayoutRoute,
+  } as any)
+const visiteurGuestLayoutIndexRoute =
+  visiteurGuestLayoutIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => visiteurGuestLayoutRoute,
+  } as any)
+const AuthAuthLayoutRegisterRoute = AuthAuthLayoutRegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => AuthAuthLayoutRoute,
 } as any)
-const DemoStartSsrIndexRoute = DemoStartSsrIndexRouteImport.update({
-  id: '/demo/start/ssr/',
-  path: '/demo/start/ssr/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoStartSsrSpaModeRoute = DemoStartSsrSpaModeRouteImport.update({
-  id: '/demo/start/ssr/spa-mode',
-  path: '/demo/start/ssr/spa-mode',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoStartSsrFullSsrRoute = DemoStartSsrFullSsrRouteImport.update({
-  id: '/demo/start/ssr/full-ssr',
-  path: '/demo/start/ssr/full-ssr',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoStartSsrDataOnlyRoute = DemoStartSsrDataOnlyRouteImport.update({
-  id: '/demo/start/ssr/data-only',
-  path: '/demo/start/ssr/data-only',
-  getParentRoute: () => rootRouteImport,
+const AuthAuthLayoutLoginRoute = AuthAuthLayoutLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AuthAuthLayoutRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/demo/api/names': typeof DemoApiNamesRoute
-  '/demo/start/api-request': typeof DemoStartApiRequestRoute
-  '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
-  '/demo/start/ssr/data-only': typeof DemoStartSsrDataOnlyRoute
-  '/demo/start/ssr/full-ssr': typeof DemoStartSsrFullSsrRoute
-  '/demo/start/ssr/spa-mode': typeof DemoStartSsrSpaModeRoute
-  '/demo/start/ssr': typeof DemoStartSsrIndexRoute
+  '/auth': typeof AuthAuthLayoutRouteWithChildren
+  '/dashboard': typeof DashboardDashBoardLayoutRouteWithChildren
+  '/auth/login': typeof AuthAuthLayoutLoginRoute
+  '/auth/register': typeof AuthAuthLayoutRegisterRoute
+  '/': typeof visiteurGuestLayoutIndexRoute
+  '/dashboard/': typeof DashboardDashBoardLayoutIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/demo/api/names': typeof DemoApiNamesRoute
-  '/demo/start/api-request': typeof DemoStartApiRequestRoute
-  '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
-  '/demo/start/ssr/data-only': typeof DemoStartSsrDataOnlyRoute
-  '/demo/start/ssr/full-ssr': typeof DemoStartSsrFullSsrRoute
-  '/demo/start/ssr/spa-mode': typeof DemoStartSsrSpaModeRoute
-  '/demo/start/ssr': typeof DemoStartSsrIndexRoute
+  '/auth': typeof AuthAuthLayoutRouteWithChildren
+  '/dashboard': typeof DashboardDashBoardLayoutIndexRoute
+  '/auth/login': typeof AuthAuthLayoutLoginRoute
+  '/auth/register': typeof AuthAuthLayoutRegisterRoute
+  '/': typeof visiteurGuestLayoutIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/demo/api/names': typeof DemoApiNamesRoute
-  '/demo/start/api-request': typeof DemoStartApiRequestRoute
-  '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
-  '/demo/start/ssr/data-only': typeof DemoStartSsrDataOnlyRoute
-  '/demo/start/ssr/full-ssr': typeof DemoStartSsrFullSsrRoute
-  '/demo/start/ssr/spa-mode': typeof DemoStartSsrSpaModeRoute
-  '/demo/start/ssr/': typeof DemoStartSsrIndexRoute
+  '/(visiteur)/_guestLayout': typeof visiteurGuestLayoutRouteWithChildren
+  '/auth': typeof AuthRouteWithChildren
+  '/auth/_authLayout': typeof AuthAuthLayoutRouteWithChildren
+  '/dashboard': typeof DashboardRouteWithChildren
+  '/dashboard/_dashBoardLayout': typeof DashboardDashBoardLayoutRouteWithChildren
+  '/auth/_authLayout/login': typeof AuthAuthLayoutLoginRoute
+  '/auth/_authLayout/register': typeof AuthAuthLayoutRegisterRoute
+  '/(visiteur)/_guestLayout/': typeof visiteurGuestLayoutIndexRoute
+  '/dashboard/_dashBoardLayout/': typeof DashboardDashBoardLayoutIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/auth'
+    | '/dashboard'
+    | '/auth/login'
+    | '/auth/register'
     | '/'
-    | '/demo/api/names'
-    | '/demo/start/api-request'
-    | '/demo/start/server-funcs'
-    | '/demo/start/ssr/data-only'
-    | '/demo/start/ssr/full-ssr'
-    | '/demo/start/ssr/spa-mode'
-    | '/demo/start/ssr'
+    | '/dashboard/'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/demo/api/names'
-    | '/demo/start/api-request'
-    | '/demo/start/server-funcs'
-    | '/demo/start/ssr/data-only'
-    | '/demo/start/ssr/full-ssr'
-    | '/demo/start/ssr/spa-mode'
-    | '/demo/start/ssr'
+  to: '/auth' | '/dashboard' | '/auth/login' | '/auth/register' | '/'
   id:
     | '__root__'
-    | '/'
-    | '/demo/api/names'
-    | '/demo/start/api-request'
-    | '/demo/start/server-funcs'
-    | '/demo/start/ssr/data-only'
-    | '/demo/start/ssr/full-ssr'
-    | '/demo/start/ssr/spa-mode'
-    | '/demo/start/ssr/'
+    | '/(visiteur)/_guestLayout'
+    | '/auth'
+    | '/auth/_authLayout'
+    | '/dashboard'
+    | '/dashboard/_dashBoardLayout'
+    | '/auth/_authLayout/login'
+    | '/auth/_authLayout/register'
+    | '/(visiteur)/_guestLayout/'
+    | '/dashboard/_dashBoardLayout/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  DemoApiNamesRoute: typeof DemoApiNamesRoute
-  DemoStartApiRequestRoute: typeof DemoStartApiRequestRoute
-  DemoStartServerFuncsRoute: typeof DemoStartServerFuncsRoute
-  DemoStartSsrDataOnlyRoute: typeof DemoStartSsrDataOnlyRoute
-  DemoStartSsrFullSsrRoute: typeof DemoStartSsrFullSsrRoute
-  DemoStartSsrSpaModeRoute: typeof DemoStartSsrSpaModeRoute
-  DemoStartSsrIndexRoute: typeof DemoStartSsrIndexRoute
+  visiteurGuestLayoutRoute: typeof visiteurGuestLayoutRouteWithChildren
+  AuthRoute: typeof AuthRouteWithChildren
+  DashboardRoute: typeof DashboardRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard/_dashBoardLayout': {
+      id: '/dashboard/_dashBoardLayout'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardDashBoardLayoutRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/auth/_authLayout': {
+      id: '/auth/_authLayout'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthAuthLayoutRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/(visiteur)/_guestLayout': {
+      id: '/(visiteur)/_guestLayout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof visiteurGuestLayoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard/_dashBoardLayout/': {
+      id: '/dashboard/_dashBoardLayout/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof DashboardDashBoardLayoutIndexRouteImport
+      parentRoute: typeof DashboardDashBoardLayoutRoute
+    }
+    '/(visiteur)/_guestLayout/': {
+      id: '/(visiteur)/_guestLayout/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof visiteurGuestLayoutIndexRouteImport
+      parentRoute: typeof visiteurGuestLayoutRoute
     }
-    '/demo/start/server-funcs': {
-      id: '/demo/start/server-funcs'
-      path: '/demo/start/server-funcs'
-      fullPath: '/demo/start/server-funcs'
-      preLoaderRoute: typeof DemoStartServerFuncsRouteImport
-      parentRoute: typeof rootRouteImport
+    '/auth/_authLayout/register': {
+      id: '/auth/_authLayout/register'
+      path: '/register'
+      fullPath: '/auth/register'
+      preLoaderRoute: typeof AuthAuthLayoutRegisterRouteImport
+      parentRoute: typeof AuthAuthLayoutRoute
     }
-    '/demo/start/api-request': {
-      id: '/demo/start/api-request'
-      path: '/demo/start/api-request'
-      fullPath: '/demo/start/api-request'
-      preLoaderRoute: typeof DemoStartApiRequestRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/api/names': {
-      id: '/demo/api/names'
-      path: '/demo/api/names'
-      fullPath: '/demo/api/names'
-      preLoaderRoute: typeof DemoApiNamesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/start/ssr/': {
-      id: '/demo/start/ssr/'
-      path: '/demo/start/ssr'
-      fullPath: '/demo/start/ssr'
-      preLoaderRoute: typeof DemoStartSsrIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/start/ssr/spa-mode': {
-      id: '/demo/start/ssr/spa-mode'
-      path: '/demo/start/ssr/spa-mode'
-      fullPath: '/demo/start/ssr/spa-mode'
-      preLoaderRoute: typeof DemoStartSsrSpaModeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/start/ssr/full-ssr': {
-      id: '/demo/start/ssr/full-ssr'
-      path: '/demo/start/ssr/full-ssr'
-      fullPath: '/demo/start/ssr/full-ssr'
-      preLoaderRoute: typeof DemoStartSsrFullSsrRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/start/ssr/data-only': {
-      id: '/demo/start/ssr/data-only'
-      path: '/demo/start/ssr/data-only'
-      fullPath: '/demo/start/ssr/data-only'
-      preLoaderRoute: typeof DemoStartSsrDataOnlyRouteImport
-      parentRoute: typeof rootRouteImport
+    '/auth/_authLayout/login': {
+      id: '/auth/_authLayout/login'
+      path: '/login'
+      fullPath: '/auth/login'
+      preLoaderRoute: typeof AuthAuthLayoutLoginRouteImport
+      parentRoute: typeof AuthAuthLayoutRoute
     }
   }
 }
 
+interface visiteurGuestLayoutRouteChildren {
+  visiteurGuestLayoutIndexRoute: typeof visiteurGuestLayoutIndexRoute
+}
+
+const visiteurGuestLayoutRouteChildren: visiteurGuestLayoutRouteChildren = {
+  visiteurGuestLayoutIndexRoute: visiteurGuestLayoutIndexRoute,
+}
+
+const visiteurGuestLayoutRouteWithChildren =
+  visiteurGuestLayoutRoute._addFileChildren(visiteurGuestLayoutRouteChildren)
+
+interface AuthAuthLayoutRouteChildren {
+  AuthAuthLayoutLoginRoute: typeof AuthAuthLayoutLoginRoute
+  AuthAuthLayoutRegisterRoute: typeof AuthAuthLayoutRegisterRoute
+}
+
+const AuthAuthLayoutRouteChildren: AuthAuthLayoutRouteChildren = {
+  AuthAuthLayoutLoginRoute: AuthAuthLayoutLoginRoute,
+  AuthAuthLayoutRegisterRoute: AuthAuthLayoutRegisterRoute,
+}
+
+const AuthAuthLayoutRouteWithChildren = AuthAuthLayoutRoute._addFileChildren(
+  AuthAuthLayoutRouteChildren,
+)
+
+interface AuthRouteChildren {
+  AuthAuthLayoutRoute: typeof AuthAuthLayoutRouteWithChildren
+}
+
+const AuthRouteChildren: AuthRouteChildren = {
+  AuthAuthLayoutRoute: AuthAuthLayoutRouteWithChildren,
+}
+
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+
+interface DashboardDashBoardLayoutRouteChildren {
+  DashboardDashBoardLayoutIndexRoute: typeof DashboardDashBoardLayoutIndexRoute
+}
+
+const DashboardDashBoardLayoutRouteChildren: DashboardDashBoardLayoutRouteChildren =
+  {
+    DashboardDashBoardLayoutIndexRoute: DashboardDashBoardLayoutIndexRoute,
+  }
+
+const DashboardDashBoardLayoutRouteWithChildren =
+  DashboardDashBoardLayoutRoute._addFileChildren(
+    DashboardDashBoardLayoutRouteChildren,
+  )
+
+interface DashboardRouteChildren {
+  DashboardDashBoardLayoutRoute: typeof DashboardDashBoardLayoutRouteWithChildren
+}
+
+const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardDashBoardLayoutRoute: DashboardDashBoardLayoutRouteWithChildren,
+}
+
+const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
+  DashboardRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  DemoApiNamesRoute: DemoApiNamesRoute,
-  DemoStartApiRequestRoute: DemoStartApiRequestRoute,
-  DemoStartServerFuncsRoute: DemoStartServerFuncsRoute,
-  DemoStartSsrDataOnlyRoute: DemoStartSsrDataOnlyRoute,
-  DemoStartSsrFullSsrRoute: DemoStartSsrFullSsrRoute,
-  DemoStartSsrSpaModeRoute: DemoStartSsrSpaModeRoute,
-  DemoStartSsrIndexRoute: DemoStartSsrIndexRoute,
+  visiteurGuestLayoutRoute: visiteurGuestLayoutRouteWithChildren,
+  AuthRoute: AuthRouteWithChildren,
+  DashboardRoute: DashboardRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}
