@@ -3,7 +3,6 @@
 import * as React from "react"
 import { Command, Inbox } from "lucide-react"
 import { Link } from "@tanstack/react-router"
-import TransactionsList from "./transaction-list"
 
 import { NavUser } from "@/components/nav-user"
 import {
@@ -101,7 +100,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarContent>
           <SidebarGroup className="px-0">
             <SidebarGroupContent>
-              <TransactionsList />
+              <span>oka</span>
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
